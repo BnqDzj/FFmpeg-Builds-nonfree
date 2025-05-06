@@ -8,6 +8,11 @@ ffbuild_enabled() {
     return 0
 }
 
+ffbuild_dockerdl() {
+    default_dl .
+    echo "git fetch --unshallow --filter=blob:none"
+}
+
 ffbuild_dockerbuild() {
     # No need to build this
     echo > app/CMakeLists.txt
@@ -21,8 +26,7 @@ ffbuild_dockerbuild() {
     make install
 
     mv "$FFBUILD_PREFIX"/lib{/oapv/liboapv.a,}
-    rm -r "$FFBUILD_PREFIX"/{bin,lib/oapv}
-    rm "$FFBUILD_PREFIX"/include/oapv/oapv_exports.h
+    rm -rf "$FFBUILD_PREFIX"/{bin,lib/oapv,include/oapv/oapv_exports.h,lib/liboapv.so*}
 
     {
         echo "Libs.private: -lm"
