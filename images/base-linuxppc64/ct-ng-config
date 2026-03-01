@@ -43,7 +43,7 @@ CT_MODULES=y
 #
 # crosstool-NG behavior
 #
-# CT_OBSOLETE is not set
+CT_OBSOLETE=y
 CT_EXPERIMENTAL=y
 CT_ALLOW_BUILD_AS_ROOT=y
 CT_ALLOW_BUILD_AS_ROOT_SURE=y
@@ -107,10 +107,10 @@ CT_PATCH_ORDER="bundled"
 CT_PARALLEL_JOBS=0
 CT_LOAD=""
 CT_USE_PIPES=y
-CT_EXTRA_CFLAGS_FOR_BUILD=""
-CT_EXTRA_CXXFLAGS_FOR_BUILD=""
+CT_EXTRA_CFLAGS_FOR_BUILD="-fPIC -DPIC"
+CT_EXTRA_CXXFLAGS_FOR_BUILD="-fPIC -DPIC"
 CT_EXTRA_LDFLAGS_FOR_BUILD=""
-CT_EXTRA_CFLAGS_FOR_HOST=""
+CT_EXTRA_CFLAGS_FOR_HOST="-fPIC -DPIC"
 CT_EXTRA_LDFLAGS_FOR_HOST=""
 # CT_CONFIG_SHELL_SH is not set
 # CT_CONFIG_SHELL_ASH is not set
@@ -151,7 +151,7 @@ CT_LOG_LEVEL_MAX="DEBUG"
 # CT_ARCH_NIOS2 is not set
 # CT_ARCH_OPENRISC is not set
 # CT_ARCH_PARISC is not set
-# CT_ARCH_POWERPC is not set
+CT_ARCH_POWERPC=y
 # CT_ARCH_PRU is not set
 # CT_ARCH_RISCV is not set
 # CT_ARCH_RX is not set
@@ -159,18 +159,21 @@ CT_LOG_LEVEL_MAX="DEBUG"
 # CT_ARCH_SH is not set
 # CT_ARCH_SPARC is not set
 # CT_ARCH_TRICORE is not set
-CT_ARCH_X86=y
+# CT_ARCH_X86 is not set
 # CT_ARCH_XTENSA is not set
-CT_ARCH="x86"
-CT_ARCH_CHOICE_KSYM="X86"
+CT_ARCH="powerpc"
+CT_ARCH_CHOICE_KSYM="POWERPC"
 CT_ARCH_CPU=""
 CT_ARCH_TUNE=""
-CT_ARCH_X86_SHOW=y
+CT_ARCH_POWERPC_SHOW=y
 
 #
-# Options for x86
+# Options for powerpc
 #
-CT_ARCH_X86_PKG_KSYM=""
+CT_ARCH_POWERPC_PKG_KSYM=""
+CT_ARCH_powerpc_ABI=""
+CT_ARCH_powerpc_ABI_DEFAULT=y
+# CT_ARCH_powerpc_ABI_SPE is not set
 CT_ALL_ARCH_CHOICES="ALPHA ARC ARM AVR BPF C6X LM32 LOONGARCH M68K MICROBLAZE MIPS MOXIE MSP430 NIOS2 OPENRISC PARISC POWERPC PRU RISCV RX S390 SH SPARC TRICORE X86 XTENSA"
 CT_ARCH_SUFFIX=""
 # CT_OMIT_TARGET_VENDOR is not set
@@ -182,6 +185,11 @@ CT_ARCH_SUFFIX=""
 CT_DEMULTILIB=y
 CT_ARCH_USE_MMU=y
 CT_ARCH_SUPPORTS_LIBSANITIZER=y
+CT_ARCH_SUPPORTS_EITHER_ENDIAN=y
+CT_ARCH_DEFAULT_BE=y
+CT_ARCH_BE=y
+# CT_ARCH_LE is not set
+CT_ARCH_ENDIAN="big"
 CT_ARCH_SUPPORTS_32=y
 CT_ARCH_SUPPORTS_64=y
 CT_ARCH_DEFAULT_32=y
@@ -193,12 +201,17 @@ CT_ARCH_SUPPORTS_WITH_32_64=y
 #
 # Target optimisations
 #
-CT_ARCH_SUPPORTS_WITH_ARCH=y
+CT_ARCH_SUPPORTS_WITH_ABI=y
 CT_ARCH_SUPPORTS_WITH_CPU=y
 CT_ARCH_SUPPORTS_WITH_TUNE=y
-CT_ARCH_ARCH=""
-CT_TARGET_CFLAGS=""
+CT_ARCH_SUPPORTS_WITH_FLOAT=y
+CT_ARCH_ABI=""
+CT_ARCH_FLOAT_AUTO=y
+# CT_ARCH_FLOAT_HW is not set
+# CT_ARCH_FLOAT_SW is not set
+CT_TARGET_CFLAGS="-fPIC -DPIC"
 CT_TARGET_LDFLAGS=""
+CT_ARCH_FLOAT="auto"
 # end of Target options
 
 #
@@ -208,12 +221,9 @@ CT_TARGET_LDFLAGS=""
 #
 # General toolchain options
 #
-CT_FORCE_SYSROOT=y
 CT_USE_SYSROOT=y
 CT_SYSROOT_NAME="sysroot"
 CT_SYSROOT_DIR_PREFIX=""
-CT_WANTS_STATIC_LINK=y
-CT_WANTS_STATIC_LINK_CXX=y
 # CT_STATIC_TOOLCHAIN is not set
 CT_SHOW_CT_VERSION=y
 CT_TOOLCHAIN_PKGVERSION=""
@@ -222,7 +232,7 @@ CT_TOOLCHAIN_BUGURL=""
 #
 # Tuple completion and aliasing
 #
-CT_TARGET_VENDOR="w64"
+CT_TARGET_VENDOR="ffbuild"
 CT_TARGET_ALIAS_SED_EXPR=""
 CT_TARGET_ALIAS=""
 
@@ -252,19 +262,116 @@ CT_TOOLCHAIN_CMAKE_TOOLCHAIN_FILE=y
 #
 # Operating System
 #
-CT_WINDOWS=y
 CT_KERNEL_SUPPORTS_SHARED_LIBS=y
 # CT_KERNEL_BARE_METAL is not set
-# CT_KERNEL_LINUX is not set
-CT_KERNEL_WINDOWS=y
-CT_KERNEL="windows"
-CT_KERNEL_CHOICE_KSYM="WINDOWS"
-CT_KERNEL_WINDOWS_SHOW=y
+CT_KERNEL_LINUX=y
+CT_KERNEL="linux"
+CT_KERNEL_CHOICE_KSYM="LINUX"
+CT_KERNEL_LINUX_SHOW=y
 
 #
-# Options for windows
+# Options for linux
 #
-CT_KERNEL_WINDOWS_PKG_KSYM=""
+CT_KERNEL_LINUX_PKG_KSYM="LINUX"
+CT_LINUX_DIR_NAME="linux"
+CT_LINUX_PKG_NAME="linux"
+CT_LINUX_SRC_RELEASE=y
+# CT_LINUX_SRC_DEVEL is not set
+# CT_LINUX_SRC_CUSTOM is not set
+CT_LINUX_PATCH_GLOBAL=y
+# CT_LINUX_PATCH_BUNDLED is not set
+# CT_LINUX_PATCH_LOCAL is not set
+# CT_LINUX_PATCH_BUNDLED_LOCAL is not set
+# CT_LINUX_PATCH_LOCAL_BUNDLED is not set
+# CT_LINUX_PATCH_NONE is not set
+CT_LINUX_PATCH_ORDER="global"
+# CT_LINUX_V_6_18 is not set
+# CT_LINUX_V_6_17 is not set
+# CT_LINUX_V_6_16 is not set
+# CT_LINUX_V_6_15 is not set
+# CT_LINUX_V_6_14 is not set
+# CT_LINUX_V_6_13 is not set
+# CT_LINUX_V_6_12 is not set
+# CT_LINUX_V_6_11 is not set
+# CT_LINUX_V_6_10 is not set
+# CT_LINUX_V_6_9 is not set
+# CT_LINUX_V_6_8 is not set
+# CT_LINUX_V_6_7 is not set
+# CT_LINUX_V_6_6 is not set
+# CT_LINUX_V_6_5 is not set
+# CT_LINUX_V_6_4 is not set
+# CT_LINUX_V_6_3 is not set
+# CT_LINUX_V_6_2 is not set
+# CT_LINUX_V_6_1 is not set
+# CT_LINUX_V_6_0 is not set
+# CT_LINUX_V_5_19 is not set
+# CT_LINUX_V_5_18 is not set
+# CT_LINUX_V_5_17 is not set
+# CT_LINUX_V_5_16 is not set
+# CT_LINUX_V_5_15 is not set
+# CT_LINUX_V_5_14 is not set
+# CT_LINUX_V_5_13 is not set
+# CT_LINUX_V_5_12 is not set
+# CT_LINUX_V_5_11 is not set
+# CT_LINUX_V_5_10 is not set
+# CT_LINUX_V_5_9 is not set
+# CT_LINUX_V_5_8 is not set
+# CT_LINUX_V_5_7 is not set
+# CT_LINUX_V_5_5 is not set
+# CT_LINUX_V_5_4 is not set
+# CT_LINUX_V_5_3 is not set
+# CT_LINUX_V_5_2 is not set
+# CT_LINUX_V_5_1 is not set
+# CT_LINUX_V_5_0 is not set
+# CT_LINUX_V_4_20 is not set
+# CT_LINUX_V_4_19 is not set
+CT_LINUX_V_4_18=y
+# CT_LINUX_V_4_17 is not set
+# CT_LINUX_V_4_16 is not set
+# CT_LINUX_V_4_15 is not set
+# CT_LINUX_V_4_14 is not set
+# CT_LINUX_V_4_13 is not set
+# CT_LINUX_V_4_12 is not set
+# CT_LINUX_V_4_11 is not set
+# CT_LINUX_V_4_10 is not set
+# CT_LINUX_V_4_9 is not set
+# CT_LINUX_V_4_4 is not set
+# CT_LINUX_V_4_1 is not set
+# CT_LINUX_V_3_18 is not set
+# CT_LINUX_V_3_16 is not set
+# CT_LINUX_V_3_13 is not set
+# CT_LINUX_V_3_12 is not set
+# CT_LINUX_V_3_10 is not set
+# CT_LINUX_V_3_4 is not set
+# CT_LINUX_V_3_2 is not set
+CT_LINUX_VERSION="4.18.20"
+CT_LINUX_MIRRORS="$(CT_Mirrors kernel.org linux ${CT_LINUX_VERSION})"
+CT_LINUX_ARCHIVE_FILENAME="@{pkg_name}-@{version}"
+CT_LINUX_ARCHIVE_DIRNAME="@{pkg_name}-@{version}"
+CT_LINUX_ARCHIVE_FORMATS=".tar.xz .tar.gz"
+CT_LINUX_SIGNATURE_FORMAT="unpacked/.sign"
+CT_LINUX_5_19_or_older=y
+CT_LINUX_older_than_5_19=y
+CT_LINUX_5_12_or_older=y
+CT_LINUX_older_than_5_12=y
+CT_LINUX_5_5_or_older=y
+CT_LINUX_older_than_5_5=y
+CT_LINUX_5_3_or_older=y
+CT_LINUX_older_than_5_3=y
+CT_LINUX_later_than_4_8=y
+CT_LINUX_4_8_or_later=y
+CT_LINUX_later_than_3_7=y
+CT_LINUX_3_7_or_later=y
+CT_LINUX_later_than_3_2=y
+CT_LINUX_3_2_or_later=y
+CT_LINUX_REQUIRE_3_2_or_later=y
+CT_KERNEL_has_rsync=y
+CT_KERNEL_DEP_RSYNC=y
+CT_KERNEL_LINUX_VERBOSITY_0=y
+# CT_KERNEL_LINUX_VERBOSITY_1 is not set
+# CT_KERNEL_LINUX_VERBOSITY_2 is not set
+CT_KERNEL_LINUX_VERBOSE_LEVEL=0
+# CT_KERNEL_LINUX_INSTALL_CHECK is not set
 CT_ALL_KERNEL_CHOICES="BARE_METAL LINUX WINDOWS"
 
 #
@@ -363,63 +470,141 @@ CT_ALL_BINUTILS_CHOICES="BINUTILS"
 #
 # C-library
 #
-CT_LIBC_MINGW_W64=y
-CT_LIBC="mingw-w64"
-CT_LIBC_CHOICE_KSYM="MINGW_W64"
-CT_THREADS="win32"
-CT_LIBC_MINGW_W64_SHOW=y
+CT_LIBC_GLIBC=y
+# CT_LIBC_MUSL is not set
+# CT_LIBC_UCLIBC_NG is not set
+CT_LIBC="glibc"
+CT_LIBC_CHOICE_KSYM="GLIBC"
+CT_LIBC_GLIBC_SHOW=y
 
 #
-# Options for mingw-w64
+# Options for glibc
 #
-CT_LIBC_MINGW_W64_PKG_KSYM="MINGW_W64"
-CT_MINGW_W64_DIR_NAME="mingw-w64"
-CT_MINGW_W64_PKG_NAME="mingw-w64"
-CT_MINGW_W64_SRC_RELEASE=y
-# CT_MINGW_W64_SRC_DEVEL is not set
-# CT_MINGW_W64_SRC_CUSTOM is not set
-CT_MINGW_W64_PATCH_GLOBAL=y
-# CT_MINGW_W64_PATCH_BUNDLED is not set
-# CT_MINGW_W64_PATCH_LOCAL is not set
-# CT_MINGW_W64_PATCH_BUNDLED_LOCAL is not set
-# CT_MINGW_W64_PATCH_LOCAL_BUNDLED is not set
-# CT_MINGW_W64_PATCH_NONE is not set
-CT_MINGW_W64_PATCH_ORDER="global"
-CT_MINGW_W64_V_V13_0=y
-# CT_MINGW_W64_V_V12_0 is not set
-# CT_MINGW_W64_V_V11_0 is not set
-# CT_MINGW_W64_V_V10_0 is not set
-# CT_MINGW_W64_V_V9_0 is not set
-# CT_MINGW_W64_V_V8_0 is not set
-# CT_MINGW_W64_V_V7_0 is not set
-# CT_MINGW_W64_V_V6_0 is not set
-# CT_MINGW_W64_V_V5_0 is not set
-# CT_MINGW_W64_V_V4_0 is not set
-CT_MINGW_W64_VERSION="v13.0.0"
-CT_MINGW_W64_MIRRORS="http://downloads.sourceforge.net/sourceforge/mingw-w64 https://downloads.sourceforge.net/project/mingw-w64/mingw-w64/mingw-w64-release/"
-CT_MINGW_W64_ARCHIVE_FILENAME="@{pkg_name}-@{version}"
-CT_MINGW_W64_ARCHIVE_DIRNAME="@{pkg_name}-@{version}"
-CT_MINGW_W64_ARCHIVE_FORMATS=".tar.bz2 .zip"
-CT_MINGW_W64_SIGNATURE_FORMAT="packed/.sig"
-CT_MINGW_SECURE_API=y
-# CT_MINGW_DEFAULT_MSVCRT_DEFAULT is not set
-# CT_MINGW_DEFAULT_MSVCRT_MSVCRT is not set
-CT_MINGW_DEFAULT_MSVCRT_UCRT=y
-# CT_MINGW_DEFAULT_MSVCRT_CUSTOM is not set
-CT_MINGW_DIRECTX=y
-CT_MINGW_DDK=y
-CT_MINGW_TOOLS=y
-CT_MINGW_TOOL_LIST_ARRAY="gendef genidl genlib genpeimg widl"
+CT_LIBC_GLIBC_PKG_KSYM="GLIBC"
+CT_GLIBC_DIR_NAME="glibc"
+CT_GLIBC_USE_GNU=y
+# CT_GLIBC_USE_ORACLE is not set
+CT_GLIBC_USE="GLIBC"
+CT_GLIBC_PKG_NAME="glibc"
+CT_GLIBC_SRC_RELEASE=y
+# CT_GLIBC_SRC_DEVEL is not set
+# CT_GLIBC_SRC_CUSTOM is not set
+CT_GLIBC_PATCH_GLOBAL=y
+# CT_GLIBC_PATCH_BUNDLED is not set
+# CT_GLIBC_PATCH_LOCAL is not set
+# CT_GLIBC_PATCH_BUNDLED_LOCAL is not set
+# CT_GLIBC_PATCH_LOCAL_BUNDLED is not set
+# CT_GLIBC_PATCH_NONE is not set
+CT_GLIBC_PATCH_ORDER="global"
+# CT_GLIBC_V_2_43 is not set
+# CT_GLIBC_V_2_42 is not set
+# CT_GLIBC_V_2_41 is not set
+# CT_GLIBC_V_2_40 is not set
+# CT_GLIBC_V_2_39 is not set
+# CT_GLIBC_V_2_38 is not set
+# CT_GLIBC_V_2_37 is not set
+# CT_GLIBC_V_2_36 is not set
+# CT_GLIBC_V_2_35 is not set
+# CT_GLIBC_V_2_34 is not set
+# CT_GLIBC_V_2_33 is not set
+# CT_GLIBC_V_2_32 is not set
+# CT_GLIBC_V_2_31 is not set
+# CT_GLIBC_V_2_30 is not set
+# CT_GLIBC_V_2_29 is not set
+CT_GLIBC_V_2_28=y
+# CT_GLIBC_V_2_27 is not set
+# CT_GLIBC_V_2_26 is not set
+# CT_GLIBC_V_2_25 is not set
+# CT_GLIBC_V_2_24 is not set
+# CT_GLIBC_V_2_23 is not set
+# CT_GLIBC_V_2_19 is not set
+# CT_GLIBC_V_2_17 is not set
+CT_GLIBC_VERSION="2.28"
+CT_GLIBC_MIRRORS="$(CT_Mirrors GNU glibc)"
+CT_GLIBC_ARCHIVE_FILENAME="@{pkg_name}-@{version}"
+CT_GLIBC_ARCHIVE_DIRNAME="@{pkg_name}-@{version}"
+CT_GLIBC_ARCHIVE_FORMATS=".tar.xz .tar.bz2 .tar.gz"
+CT_GLIBC_SIGNATURE_FORMAT="packed/.sig"
+CT_GLIBC_2_43_or_older=y
+CT_GLIBC_older_than_2_43=y
+CT_GLIBC_2_42_or_older=y
+CT_GLIBC_older_than_2_42=y
+CT_GLIBC_2_41_or_older=y
+CT_GLIBC_older_than_2_41=y
+CT_GLIBC_2_38_or_older=y
+CT_GLIBC_older_than_2_38=y
+CT_GLIBC_2_37_or_older=y
+CT_GLIBC_older_than_2_37=y
+CT_GLIBC_2_36_or_older=y
+CT_GLIBC_older_than_2_36=y
+CT_GLIBC_2_34_or_older=y
+CT_GLIBC_older_than_2_34=y
+CT_GLIBC_2_32_or_older=y
+CT_GLIBC_older_than_2_32=y
+CT_GLIBC_2_31_or_older=y
+CT_GLIBC_older_than_2_31=y
+CT_GLIBC_2_30_or_older=y
+CT_GLIBC_older_than_2_30=y
+CT_GLIBC_2_29_or_older=y
+CT_GLIBC_older_than_2_29=y
+CT_GLIBC_2_28_or_later=y
+CT_GLIBC_2_28_or_older=y
+CT_GLIBC_later_than_2_27=y
+CT_GLIBC_2_27_or_later=y
+CT_GLIBC_later_than_2_26=y
+CT_GLIBC_2_26_or_later=y
+CT_GLIBC_later_than_2_25=y
+CT_GLIBC_2_25_or_later=y
+CT_GLIBC_later_than_2_24=y
+CT_GLIBC_2_24_or_later=y
+CT_GLIBC_later_than_2_23=y
+CT_GLIBC_2_23_or_later=y
+CT_GLIBC_later_than_2_20=y
+CT_GLIBC_2_20_or_later=y
+CT_GLIBC_later_than_2_17=y
+CT_GLIBC_2_17_or_later=y
+CT_GLIBC_later_than_2_14=y
+CT_GLIBC_2_14_or_later=y
+CT_GLIBC_DEP_KERNEL_HEADERS_VERSION=y
+CT_GLIBC_DEP_BINUTILS=y
+CT_GLIBC_DEP_GCC=y
+CT_GLIBC_DEP_PYTHON=y
+CT_GLIBC_DEP_MAKE_4_3=y
+CT_GLIBC_SPARC_ALLOW_V7=y
+CT_THREADS="nptl"
+CT_GLIBC_BUILD_SSP=y
+CT_GLIBC_HAS_LIBIDN_ADDON=y
+# CT_GLIBC_USE_LIBIDN_ADDON is not set
+CT_GLIBC_NO_SPARC_V8=y
+CT_GLIBC_HAS_OBSOLETE_RPC=y
+CT_GLIBC_EXTRA_CONFIG_ARRAY="--with-pic"
+CT_GLIBC_CONFIGPARMS=""
+# CT_GLIBC_ENABLE_DEBUG is not set
+CT_GLIBC_EXTRA_CFLAGS="-fPIC -DPIC"
+CT_GLIBC_ENABLE_OBSOLETE_RPC=y
+# CT_GLIBC_ENABLE_FORTIFIED_BUILD is not set
+# CT_GLIBC_DISABLE_VERSIONING is not set
+CT_GLIBC_OLDEST_ABI=""
+CT_GLIBC_FORCE_UNWIND=y
+# CT_GLIBC_LOCALES is not set
+# CT_GLIBC_KERNEL_VERSION_NONE is not set
+CT_GLIBC_KERNEL_VERSION_AS_HEADERS=y
+# CT_GLIBC_KERNEL_VERSION_CHOSEN is not set
+CT_GLIBC_MIN_KERNEL="4.18.20"
+CT_GLIBC_SSP_DEFAULT=y
+# CT_GLIBC_SSP_NO is not set
+# CT_GLIBC_SSP_YES is not set
+# CT_GLIBC_SSP_ALL is not set
+# CT_GLIBC_SSP_STRONG is not set
+CT_GLIBC_ENABLE_COMMON_FLAG=y
 CT_ALL_LIBC_CHOICES="AVR_LIBC GLIBC MINGW_W64 MOXIEBOX MUSL NEWLIB NONE PICOLIBC UCLIBC_NG"
 CT_LIBC_SUPPORT_THREADS_ANY=y
 CT_LIBC_SUPPORT_THREADS_NATIVE=y
-CT_LIBC_SUPPORT_THREADS_POSIX=y
 
 #
 # Common C library options
 #
 CT_THREADS_NATIVE=y
-# CT_THREADS_POSIX is not set
 # CT_CREATE_LDSO_CONF is not set
 CT_LIBC_XLDD=y
 # end of C-library
@@ -503,13 +688,14 @@ CT_GCC_later_than_5=y
 CT_GCC_5_or_later=y
 CT_GCC_later_than_4_9=y
 CT_GCC_4_9_or_later=y
+CT_GCC_REQUIRE_4_9_or_later=y
 CT_CC_GCC_ENABLE_PLUGINS=y
 CT_CC_GCC_HAS_LIBMPX=y
 CT_CC_GCC_ENABLE_CXX_FLAGS=""
-CT_CC_GCC_CORE_EXTRA_CONFIG_ARRAY="--enable-default-ssp"
-CT_CC_GCC_EXTRA_CONFIG_ARRAY="--enable-default-ssp --with-build-config=bootstrap-lto-lean --enable-link-serialization=2"
-CT_CC_GCC_STATIC_LIBSTDCXX=y
-CT_CC_GCC_SYSTEM_ZLIB=y
+CT_CC_GCC_CORE_EXTRA_CONFIG_ARRAY="--enable-host-shared --enable-default-ssp"
+CT_CC_GCC_EXTRA_CONFIG_ARRAY="--enable-host-shared --enable-default-ssp --with-build-config=bootstrap-lto-lean --enable-link-serialization=2"
+# CT_CC_GCC_STATIC_LIBSTDCXX is not set
+# CT_CC_GCC_SYSTEM_ZLIB is not set
 CT_CC_GCC_CONFIG_TLS=m
 
 #
@@ -522,6 +708,7 @@ CT_CC_GCC_LTO_ZSTD=m
 #
 # Settings for libraries running on target
 #
+CT_CC_GCC_ENABLE_DEFAULT_PIE=y
 # CT_CC_GCC_ENABLE_TARGET_OPTSPACE is not set
 CT_CC_GCC_LIBSTDCXX=m
 # CT_CC_GCC_LIBSTDCXX_HOSTED_DISABLE is not set
@@ -594,6 +781,9 @@ CT_MOLD_V_2_40_4=y
 # CT_MOLD_V_2_38_1 is not set
 # CT_MOLD_V_2_37_1 is not set
 # CT_MOLD_V_2_36_0 is not set
+# CT_MOLD_V_2_33_0 is not set
+# CT_MOLD_V_2_32_0 is not set
+# CT_MOLD_V_2_31_0 is not set
 CT_MOLD_VERSION="2.40.4"
 CT_MOLD_MIRRORS="https://github.com/rui314/mold/archive/refs/tags"
 CT_MOLD_ARCHIVE_FILENAME="v@{version}"
@@ -714,6 +904,7 @@ CT_ISL_V_0_27=y
 # CT_ISL_V_0_17 is not set
 # CT_ISL_V_0_16 is not set
 # CT_ISL_V_0_15 is not set
+# CT_ISL_V_0_11 is not set
 CT_ISL_VERSION="0.27"
 CT_ISL_MIRRORS="https://libisl.sourceforge.io"
 CT_ISL_ARCHIVE_FILENAME="@{pkg_name}-@{version}"
@@ -725,7 +916,29 @@ CT_ISL_0_18_or_later=y
 CT_ISL_later_than_0_15=y
 CT_ISL_0_15_or_later=y
 # CT_COMP_LIBS_LIBELF is not set
-# CT_COMP_LIBS_LIBICONV is not set
+CT_COMP_LIBS_LIBICONV=y
+CT_COMP_LIBS_LIBICONV_PKG_KSYM="LIBICONV"
+CT_LIBICONV_DIR_NAME="libiconv"
+CT_LIBICONV_PKG_NAME="libiconv"
+CT_LIBICONV_SRC_RELEASE=y
+# CT_LIBICONV_SRC_DEVEL is not set
+# CT_LIBICONV_SRC_CUSTOM is not set
+CT_LIBICONV_PATCH_GLOBAL=y
+# CT_LIBICONV_PATCH_BUNDLED is not set
+# CT_LIBICONV_PATCH_LOCAL is not set
+# CT_LIBICONV_PATCH_BUNDLED_LOCAL is not set
+# CT_LIBICONV_PATCH_LOCAL_BUNDLED is not set
+# CT_LIBICONV_PATCH_NONE is not set
+CT_LIBICONV_PATCH_ORDER="global"
+CT_LIBICONV_V_1_18=y
+# CT_LIBICONV_V_1_16 is not set
+# CT_LIBICONV_V_1_15 is not set
+CT_LIBICONV_VERSION="1.18"
+CT_LIBICONV_MIRRORS="$(CT_Mirrors GNU libiconv)"
+CT_LIBICONV_ARCHIVE_FILENAME="@{pkg_name}-@{version}"
+CT_LIBICONV_ARCHIVE_DIRNAME="@{pkg_name}-@{version}"
+CT_LIBICONV_ARCHIVE_FORMATS=".tar.gz"
+CT_LIBICONV_SIGNATURE_FORMAT="packed/.sig"
 CT_COMP_LIBS_MPC=y
 CT_COMP_LIBS_MPC_PKG_KSYM="MPC"
 CT_MPC_DIR_NAME="mpc"
@@ -768,7 +981,39 @@ CT_MPFR_ARCHIVE_FILENAME="@{pkg_name}-@{version}"
 CT_MPFR_ARCHIVE_DIRNAME="@{pkg_name}-@{version}"
 CT_MPFR_ARCHIVE_FORMATS=".tar.xz .tar.bz2 .tar.gz .zip"
 CT_MPFR_SIGNATURE_FORMAT="packed/.asc"
-# CT_COMP_LIBS_NCURSES is not set
+CT_COMP_LIBS_NCURSES=y
+CT_COMP_LIBS_NCURSES_PKG_KSYM="NCURSES"
+CT_NCURSES_DIR_NAME="ncurses"
+CT_NCURSES_PKG_NAME="ncurses"
+CT_NCURSES_SRC_RELEASE=y
+# CT_NCURSES_SRC_DEVEL is not set
+# CT_NCURSES_SRC_CUSTOM is not set
+CT_NCURSES_PATCH_GLOBAL=y
+# CT_NCURSES_PATCH_BUNDLED is not set
+# CT_NCURSES_PATCH_LOCAL is not set
+# CT_NCURSES_PATCH_BUNDLED_LOCAL is not set
+# CT_NCURSES_PATCH_LOCAL_BUNDLED is not set
+# CT_NCURSES_PATCH_NONE is not set
+CT_NCURSES_PATCH_ORDER="global"
+CT_NCURSES_V_6_5=y
+# CT_NCURSES_V_6_4 is not set
+# CT_NCURSES_V_6_2 is not set
+# CT_NCURSES_V_6_1 is not set
+# CT_NCURSES_V_6_0 is not set
+CT_NCURSES_VERSION="6.5"
+CT_NCURSES_MIRRORS="https://invisible-mirror.net/archives/ncurses $(CT_Mirrors GNU ncurses)"
+CT_NCURSES_ARCHIVE_FILENAME="@{pkg_name}-@{version}"
+CT_NCURSES_ARCHIVE_DIRNAME="@{pkg_name}-@{version}"
+CT_NCURSES_ARCHIVE_FORMATS=".tar.gz"
+CT_NCURSES_SIGNATURE_FORMAT="packed/.asc"
+# CT_NCURSES_NEW_ABI is not set
+CT_NCURSES_HOST_CONFIG_ARGS=""
+CT_NCURSES_HOST_DISABLE_DB=y
+CT_NCURSES_HOST_FALLBACKS="linux,xterm,xterm-color,xterm-256color,vt100"
+CT_NCURSES_TARGET_CONFIG_ARGS=""
+# CT_NCURSES_TARGET_DISABLE_DB is not set
+CT_NCURSES_TARGET_FALLBACKS=""
+CT_NCURSES_EXTRA_CFLAGS="-std=gnu17"
 CT_COMP_LIBS_ZLIB=y
 CT_COMP_LIBS_ZLIB_PKG_KSYM="ZLIB"
 CT_ZLIB_DIR_NAME="zlib"
@@ -816,18 +1061,22 @@ CT_ZSTD_ARCHIVE_DIRNAME="@{pkg_name}-@{version}"
 CT_ZSTD_ARCHIVE_FORMATS=".tar.gz"
 CT_ZSTD_SIGNATURE_FORMAT="packed/.sig"
 CT_ALL_COMP_LIBS_CHOICES="CLOOG EXPAT GETTEXT GMP GNUPRUMCU ISL LIBELF LIBICONV MPC MPFR NCURSES NEWLIB_NANO PICOLIBC ZLIB ZSTD"
-# CT_LIBICONV_NEEDED is not set
-# CT_GETTEXT_NEEDED is not set
+CT_LIBICONV_NEEDED=y
+CT_GETTEXT_NEEDED=y
 CT_GMP_NEEDED=y
 CT_MPFR_NEEDED=y
 CT_ISL_NEEDED=y
 CT_MPC_NEEDED=y
+CT_NCURSES_NEEDED=y
 CT_ZLIB_NEEDED=y
 CT_ZSTD_NEEDED=y
+CT_LIBICONV=y
+CT_GETTEXT=y
 CT_GMP=y
 CT_MPFR=y
 CT_ISL=y
 CT_MPC=y
+CT_NCURSES=y
 CT_ZLIB=y
 CT_ZSTD=y
 # end of Companion libraries
@@ -842,7 +1091,34 @@ CT_ZSTD=y
 # CT_COMP_TOOLS_DTC is not set
 # CT_COMP_TOOLS_LIBTOOL is not set
 # CT_COMP_TOOLS_M4 is not set
-# CT_COMP_TOOLS_MAKE is not set
+CT_COMP_TOOLS_MAKE=y
+CT_COMP_TOOLS_MAKE_PKG_KSYM="MAKE"
+CT_MAKE_DIR_NAME="make"
+CT_MAKE_PKG_NAME="make"
+CT_MAKE_SRC_RELEASE=y
+# CT_MAKE_SRC_DEVEL is not set
+# CT_MAKE_SRC_CUSTOM is not set
+CT_MAKE_PATCH_GLOBAL=y
+# CT_MAKE_PATCH_BUNDLED is not set
+# CT_MAKE_PATCH_LOCAL is not set
+# CT_MAKE_PATCH_BUNDLED_LOCAL is not set
+# CT_MAKE_PATCH_LOCAL_BUNDLED is not set
+# CT_MAKE_PATCH_NONE is not set
+CT_MAKE_PATCH_ORDER="global"
+CT_MAKE_V_4_3=y
+CT_MAKE_VERSION="4.3"
+CT_MAKE_MIRRORS="$(CT_Mirrors GNU make)"
+CT_MAKE_ARCHIVE_FILENAME="@{pkg_name}-@{version}"
+CT_MAKE_ARCHIVE_DIRNAME="@{pkg_name}-@{version}"
+CT_MAKE_ARCHIVE_FORMATS=".tar.lz .tar.gz"
+CT_MAKE_SIGNATURE_FORMAT="packed/.sig"
+CT_MAKE_4_4_or_older=y
+CT_MAKE_older_than_4_4=y
+CT_MAKE_REQUIRE_older_than_4_4=y
+CT_MAKE_4_3_or_later=y
+CT_MAKE_4_3_or_older=y
+CT_MAKE_GMAKE_SYMLINK=y
+CT_MAKE_GNUMAKE_SYMLINK=y
 CT_ALL_COMP_TOOLS_CHOICES="AUTOCONF AUTOMAKE BISON DTC LIBTOOL M4 MAKE"
 # end of Companion tools
 
