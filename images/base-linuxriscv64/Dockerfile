@@ -11,7 +11,7 @@ RUN --mount=src=ct-ng-config,dst=/.config \
     cd / && \
     rm -rf ct-ng
 
-# Prepare "cross" environment to heavily favour static builds
+# Prepare cross environment to heavily favour static builds
 RUN \
     find /opt/ct-ng \( -type l \
         -and -name '*.so' \
@@ -29,18 +29,15 @@ RUN \
         -or -name 'libm.a' \
         -or -name 'libmvec.a' \
         -or -name 'librt.a' \
-        -or -name 'libpthread.a' \
         \) -delete && \
     mkdir /opt/ffbuild
 
-ENV FFBUILD_TOOLCHAIN=x86_64-ffbuild-linux-gnu \
-    FFBUILD_RUST_TARGET="x86_64-unknown-linux-gnu"
+ENV FFBUILD_TOOLCHAIN=riscv64-ffbuild-linux-gnu \
+    FFBUILD_RUST_TARGET="riscv64gc-unknown-linux-gnu"
 
 RUN \
-    rustup default nightly && \
-    echo "[unstable]\ntarget-applies-to-host = true\nhost-config = true\n" > "$CARGO_HOME"/config.toml && \
-    echo "[target.$FFBUILD_RUST_TARGET]\nlinker = \"${FFBUILD_TOOLCHAIN}-gcc\"\nar = \"${FFBUILD_TOOLCHAIN}-gcc-ar\"\n" >> "$CARGO_HOME"/config.toml && \
-    echo "[target.host]\nlinker = \"gcc\"\nar = \"ar\"\n" >> "$CARGO_HOME"/config.toml
+    rustup target add "$FFBUILD_RUST_TARGET" && \
+    echo "[target.$FFBUILD_RUST_TARGET]\nlinker = \"${FFBUILD_TOOLCHAIN}-gcc\"\nar = \"${FFBUILD_TOOLCHAIN}-gcc-ar\"\n" > "$CARGO_HOME"/config.toml
 
 ADD toolchain.cmake /toolchain.cmake
 ADD cross.meson /cross.meson
@@ -49,7 +46,7 @@ ADD gen-implib.sh /usr/bin/gen-implib
 RUN git clone --filter=blob:none --depth=1 https://github.com/yugr/Implib.so /opt/implib
 
 ENV PATH="/opt/ct-ng/bin:${PATH}" \
-    FFBUILD_TARGET_FLAGS="--pkg-config=pkg-config --cross-prefix=${FFBUILD_TOOLCHAIN}- --arch=x86_64 --target-os=linux" \
+    FFBUILD_TARGET_FLAGS="--pkg-config=pkg-config --cross-prefix=${FFBUILD_TOOLCHAIN}- --arch=riscv64 --target-os=linux" \
     FFBUILD_CROSS_PREFIX="${FFBUILD_TOOLCHAIN}-" \
     FFBUILD_PREFIX=/opt/ffbuild \
     FFBUILD_DESTDIR=/opt/ffdest \
