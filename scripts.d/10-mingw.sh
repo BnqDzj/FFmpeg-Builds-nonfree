@@ -135,5 +135,5 @@ ffbuild_dockerbuild() {
 }
 
 ffbuild_configure() {
-    echo --enable-w32threads --disable-pthreads
+    echo --disable-w32threads --enable-pthreads
 }
