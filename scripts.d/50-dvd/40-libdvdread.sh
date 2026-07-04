@@ -31,9 +31,15 @@ ffbuild_dockerbuild() {
         return -1
     fi
 
+    export CFLAGS="$CFLAGS -Dfile_open_default=libdvdread_file_open_default -Ddir_open_default=libdvdread_dir_open_default"
+
     meson setup "${myconf[@]}" ..
     ninja -j$(nproc)
     DESTDIR="$FFBUILD_DESTDIR" ninja install
+
+    if [[ $TARGET == linux* ]]; then
+        echo 'Cflags: -D_FILE_OFFSET_BITS=64 -D_LARGEFILE64_SOURCE' >> "$FFBUILD_DESTPREFIX"/lib/pkgconfig/dvdread.pc
+    fi
 }
 
 ffbuild_configure() {
