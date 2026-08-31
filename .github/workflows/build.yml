@@ -218,6 +218,20 @@ jobs:
           - runner: ubuntu-latest
             target: win64
             variant: nonfree-shared
+          - runner: ubuntu-latest
+            target: linux64
+            variant: nonfree
+          - runner: ubuntu-latest
+            target: linux64
+            variant: nonfree-shared
+          - runner: ubuntu-24.04-arm
+            target: linuxarm64
+            variant: nonfree
+            tag_suffix: -arm
+          - runner: ubuntu-24.04-arm
+            target: linuxarm64
+            variant: nonfree-shared
+            tag_suffix: -arm
     steps:
       - name: Free Disk-Space
         run: df -h && sudo apt-get clean && docker system prune -a -f && sudo rm -rf /opt/ghc /usr/local/.ghcup /usr/local/lib/android && df -h
