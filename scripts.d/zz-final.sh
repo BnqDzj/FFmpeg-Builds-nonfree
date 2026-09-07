@@ -57,6 +57,7 @@ ffbuild_depends() {
     echo openmpt
     echo rav1e
     echo rubberband
+    echo rustdedup
     echo schannel
     echo sdl
     echo snappy

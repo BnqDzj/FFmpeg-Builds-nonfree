@@ -1,7 +1,7 @@
 #!/bin/bash
 
-SCRIPT_REPO="https://github.com/gnome/glib.git"
-SCRIPT_COMMIT="fb43b26b26e9d4a7a2ab6c2252951e039058297e"
+SCRIPT_REPO="https://github.com/GNOME/glib.git"
+SCRIPT_COMMIT="6f98b0b8ad9cb7f9be237b4a0dba3833331a8f37"
 
 ffbuild_depends() {
     echo base
@@ -40,16 +40,11 @@ ffbuild_dockerbuild() {
         -Dlibelf=disabled
         -Dmultiarch=false
         -Dbsymbolic_functions=false
+        -Dselinux=disabled
+        -Dlibmount=disabled
+        -Ddtrace=disabled
+        -Dsystemtap=disabled
     )
-
-    if [[ $TARGET == linux* ]]; then
-        myconf+=(
-            -Dselinux=disabled
-            -Dlibmount=disabled
-            -Ddtrace=disabled
-            -Dsystemtap=disabled
-        )
-    fi
 
     if [[ $TARGET == win* || $TARGET == linux* ]]; then
         myconf+=(
