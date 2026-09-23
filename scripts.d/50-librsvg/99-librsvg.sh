@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SCRIPT_REPO="https://github.com/GNOME/librsvg.git"
-SCRIPT_COMMIT="a6cee75afad445355e1e1c9d02fa3fbe9939333c"
+SCRIPT_COMMIT="7612431eb02dc009319094f8513d63c1faaecfb4"
 
 ffbuild_depends() {
     echo base
@@ -22,6 +22,9 @@ ffbuild_dockerdl() {
 
 ffbuild_dockerbuild() {
     export CARGO_NET_OFFLINE=true
+
+    sed -i -e "/'PKG_CONFIG_ALL_STATIC'/d" -e "/'SYSTEM_DEPS_LINK'/d" meson.build
+
     mkdir build && cd build
 
     local myconf=(
